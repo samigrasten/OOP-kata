@@ -1,30 +1,23 @@
-﻿using OOP_Kata.Commands.PrintCommands;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using OOP_Kata.Commands.PrintParameters;
+using OOP_Kata.Factories;
 
 namespace OOP_Kata.Commands
 {
     public class PrintCommand : ICommand
     {
-        public PrintCommand(Output output)
+        public PrintCommand(Output output, Parameters args)
         {
             _output = output;
-            _printCommands = GetCommands(_output);
+            _printParameter = new PrintParametersFactory().Create(args);
         }
 
-        public void Execute(string[] args)
-            => _printCommands
-                .First(command => command.Test(args))
-                .Execute(args);
-        
-        private List<IPrintCommand> GetCommands(Output output) 
-            => new List<IPrintCommand> {
-                new ConstPrintCommand(output),
-                new VoidPrintCommand(output)
-        };
+        public void Execute()
+            => _output.Writeline(_printParameter.ToString());
 
-        private Output _output;
 
-        private List<IPrintCommand> _printCommands;                
+        private readonly IPrintParameter _printParameter;
+        private readonly Output _output;
     }
 }

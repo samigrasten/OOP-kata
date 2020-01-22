@@ -10,7 +10,7 @@ namespace OOP_Kata
         static void Main(string[] args)
             => CommandEngine
                 .NextCommand()
-                .Select((command, arguments) => command.ExecuteCommand())
-                .First(command => command.command is QuitCommand);
+                .Select(item => item.ExecuteCommand())
+                .First(command => command is QuitCommand);
     }
 }

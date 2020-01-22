@@ -9,20 +9,18 @@ namespace OOP_Kata.Factories
 {
     public class CommandHandlerFactory
     {
-        internal static (ICommand command, string[] args) Create(string command)
+        internal static ICommand Create(string command)
         {
-            var args = command.Split(" ");
-            var key = args[0].ToUpper();
-            return (_commands.ContainsKey(key)
-                           ? _commands[key]
-                           : new VoidCommand(), 
-                        args.Skip(1).ToArray());
+            var parameters = new Parameters(command);
+            return Commands.ContainsKey(parameters.Command)
+                           ? Commands[parameters.Command](parameters)
+                           : new VoidCommand();
         }
 
-        private static Dictionary<string, ICommand> _commands = new Dictionary<string, ICommand>
+        private static readonly Dictionary<string, Func<Parameters, ICommand>> Commands = new Dictionary<string, Func<Parameters, ICommand>>
         {
-            ["PRINT"] = new PrintCommand(new Output()),
-            ["QUIT"] = new QuitCommand(),
+            ["PRINT"] = args => new PrintCommand(new Output(), args),
+            ["QUIT"] = args => new QuitCommand(),
         };
     }
 }

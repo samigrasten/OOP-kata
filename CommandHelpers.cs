@@ -4,9 +4,9 @@ namespace OOP_Kata
 {
     static class CommandHelpers
     {
-        public static (ICommand command, string[] args) ExecuteCommand(this (ICommand command, string[] args) command)
+        public static ICommand ExecuteCommand(this ICommand command)
         {
-            command.command.Execute(command.args);
+            command.Execute();
             return command;
         }
     }

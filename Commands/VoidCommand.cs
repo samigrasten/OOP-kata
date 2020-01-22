@@ -2,6 +2,6 @@
 {
     internal class VoidCommand : ICommand
     {
-        public void Execute(string[] args) { }
+        public void Execute() { }
     }
 }

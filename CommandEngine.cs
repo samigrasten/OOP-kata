@@ -6,7 +6,7 @@ namespace OOP_Kata
 {
     public static class CommandEngine
     {
-        public static IEnumerable<(ICommand command, string[] args)> NextCommand()
+        public static IEnumerable<ICommand> NextCommand()
         {
             while (true) yield return CommandHandlerFactory.Create(Output.ReadLine());
         }
